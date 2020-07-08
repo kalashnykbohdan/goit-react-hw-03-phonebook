@@ -5,6 +5,9 @@ import ContactForm from './ContactForm';
 import Filter from './Filter'
 import { uuid } from 'uuidv4';
 
+import { Toast } from "toaster-js"
+import "toaster-js/default.css";
+
 export default class App extends Component{
   state = {
     contacts: [
@@ -27,7 +30,7 @@ export default class App extends Component{
 
     this.setState(prevState =>{
       if(nameIsTrue){
-        alert(`${name} is already in contacts`)
+        new Toast(`${name} is already in contacts`, Toast.TYPE_ERROR, Toast.TIME_NORMAL);
       }else{
         return{
           contacts: [...prevState.contacts,contact],
