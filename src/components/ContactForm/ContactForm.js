@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import style from'./contactForm.module.css';
+import { Toast } from "toaster-js"
+import "toaster-js/default.css";
 
 export default class ContactForm extends Component {
     state = {
@@ -17,10 +19,17 @@ export default class ContactForm extends Component {
     handleSubmit = e =>{
         e.preventDefault();
 
-        this.props.onAddContact(this.state.name, this.state.number);
+        
+        if(this.state.name === '' || this.state.number === ''){
 
+            new Toast("Не введено имя, или номер телефона!", Toast.TYPE_ERROR, Toast.TIME_NORMAL);    
+        }
+        else{
+            this.props.onAddContact(this.state.name, this.state.number);
+        }
         this.setState({name:'',number:''});
     }
+
     render() {
         const {name, number} = this.state;
         return (
