@@ -19,8 +19,7 @@ export default class ContactForm extends Component {
 
         this.props.onAddContact(this.state.name, this.state.number);
 
-        this.setState({name:''});
-        this.setState({number:''});
+        this.setState({name:'',number:''});
     }
     render() {
         const {name, number} = this.state;

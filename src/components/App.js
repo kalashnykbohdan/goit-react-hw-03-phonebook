@@ -3,7 +3,6 @@ import Section from './Sections';
 import ContactList from './ContactList';
 import ContactForm from './ContactForm';
 import Filter from './Filter'
-import { uuid } from 'uuidv4';
 
 import { Toast } from "toaster-js"
 import "toaster-js/default.css";
@@ -11,25 +10,24 @@ import "toaster-js/default.css";
 export default class App extends Component{
   state = {
     contacts: [
-      {id: uuid(), name: 'Rosie Simpson', number: '459-12-56'},
-      {id: uuid(), name: 'Hermione Kline', number: '443-89-12'},
-      {id: uuid(), name: 'Eden Clements', number: '645-17-79'},
-      {id: uuid(), name: 'Annie Copeland', number: '227-91-26'},
+      {name: 'Rosie Simpson', number: '459-12-56'},
+      {name: 'Hermione Kline', number: '443-89-12'},
+      {name: 'Eden Clements', number: '645-17-79'},
+      {name: 'Annie Copeland', number: '227-91-26'},
     ],
     filter:'',
   };
   addContact = (name, number) =>{
     
     const contact = {
-      id:uuid(),
       name,
       number,
     }
 
-    const nameIsTrue = this.state.contacts.map(conatct => conatct.name).includes(name);
+    const nameExist = this.state.contacts.map(conatct => conatct.name).includes(name);
 
     this.setState(prevState =>{
-      if(nameIsTrue){
+      if(nameExist){
         new Toast(`${name} is already in contacts`, Toast.TYPE_ERROR, Toast.TIME_NORMAL);
       }else{
         return{
@@ -71,7 +69,18 @@ export default class App extends Component{
       }
     })
   }
+    handleSubmit = e =>{
+        e.preventDefault();
 
+        if(this.state.name === '' || this.state.number === ''){
+            new Toast("Не введено имя, или номер телефона!", Toast.TYPE_ERROR, Toast.TIME_NORMAL);    
+        }
+        else{
+            this.props.onAddContact(this.state.name, this.state.number);
+        }
+
+        this.setState({name:'', number:''});
+    }
   changeFilter = filter => {
     this.setState({ filter });
   };
