@@ -40,7 +40,10 @@ export default class App extends Component{
 
   componentDidMount(){
     console.log('Contacts componentDidMount')
+    this.localStoreg();
+  }
 
+  localStoreg(){
     const persistedTask = localStorage.getItem('contacts');
 
     if(persistedTask){
